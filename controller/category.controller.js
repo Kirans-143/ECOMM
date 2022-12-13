@@ -31,8 +31,18 @@ let getAllCategories = async (req, res, next) => {
   res.end();
 };
 
-let getCategoryById = (req, res, next) => {
-  res.write("This is for category " + req.params.categoryId);
+let getCategoryById = async (req, res, next) => {
+  let id = req.params.categoryId;
+  if (!id) {
+    res.status(400).send("ID not passes");
+  }
+  let categories = await Categories.findAll({
+    where: {
+      id: id,
+    },
+  });
+  res.writeHead(200, { "Content-Type": "application/json" });
+  res.write(JSON.stringify(categories));
   res.end();
 };
 

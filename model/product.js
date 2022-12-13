@@ -1,18 +1,26 @@
 let sequelize = require("sequelize");
 let dbConnection = require("./../config/db.config");
 
-let Categories = dbConnection.define(
-  "category",
+let Products = dbConnection.define(
+  "products",
   {
     id: {
       primaryKey: true,
       notNull: true,
-      type: sequelize.DataTypes.INTEGER,
       autoIncrement: true,
+      type: sequelize.DataTypes.INTEGER,
     },
     name: {
       notNull: true,
       type: sequelize.DataTypes.STRING,
+    },
+    price: {
+      notNull: true,
+      type: sequelize.DataTypes.BIGINT,
+    },
+    categoryId: {
+      notNull: true,
+      type: sequelize.DataTypes.INTEGER,
     },
   },
   {
@@ -20,4 +28,4 @@ let Categories = dbConnection.define(
   }
 );
 
-module.exports = Categories;
+module.exports = Products;
