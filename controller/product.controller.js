@@ -66,4 +66,9 @@ let insertProducts = async () => {
 
 createTable(); //(no need to call it coz it will create automayticaly without createTable function)
 
-module.exports = { getAllProducts, getProductById };
+module.exports = {
+  getAllProducts,
+  getProductById,
+  addNewProduct,
+  deleteProductById,
+};

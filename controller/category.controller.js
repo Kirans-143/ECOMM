@@ -46,6 +46,30 @@ let getCategoryById = async (req, res, next) => {
   res.end();
 };
 
+let addNewCategory = async (req, res, next) => {
+  let categoryToAdd = req.body.name;
+  await Categories.create({
+    name: categoryToAdd,
+  });
+  res.status(201).send("Category Added");
+  res.end();
+};
+
+let deleteCategoryById = async (req, res, next) => {
+  let id = req.params.categoryId;
+  await Categories.destroy({
+    where: {
+      id: id,
+    },
+  });
+  res.status(200).send("Category deleted");
+  res.end();
+};
 createTable();
 
-module.exports = { getAllCategories, getCategoryById };
+module.exports = {
+  getAllCategories,
+  getCategoryById,
+  addNewCategory,
+  deleteCategoryById,
+};
