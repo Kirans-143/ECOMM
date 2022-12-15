@@ -69,6 +69,4 @@ createTable(); //(no need to call it coz it will create automayticaly without cr
 module.exports = {
   getAllProducts,
   getProductById,
-  addNewProduct,
-  deleteProductById,
 };

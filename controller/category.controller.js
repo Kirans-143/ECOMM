@@ -65,6 +65,26 @@ let deleteCategoryById = async (req, res, next) => {
   res.status(200).send("Category deleted");
   res.end();
 };
+
+let updateCategoryById = async (req, res, next) => {
+  if (!req.body.name) {
+    res.status(500).send("please enter the Category Name");
+    res.end();
+  }
+  let id = req.params.categoryId;
+  // let name = req.body.name;
+  let categoryToUpdate = {
+    name: req.body.name,
+  };
+  await Categories.update(categoryToUpdate, {
+    where: {
+      id: id,
+    },
+  });
+
+  let updateCategory = await Categories.findByPk(id);
+  res.status(200).send(updateCategory);
+};
 createTable();
 
 module.exports = {
@@ -72,4 +92,5 @@ module.exports = {
   getCategoryById,
   addNewCategory,
   deleteCategoryById,
+  updateCategoryById,
 };
