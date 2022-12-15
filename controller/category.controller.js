@@ -69,7 +69,7 @@ let deleteCategoryById = async (req, res, next) => {
 let updateCategoryById = async (req, res, next) => {
   if (!req.body.name) {
     res.status(500).send("please enter the Category Name");
-    res.end();
+    return;
   }
   let id = req.params.categoryId;
   // let name = req.body.name;
@@ -94,7 +94,3 @@ module.exports = {
   deleteCategoryById,
   updateCategoryById,
 };
-
-{
-  Kiran;
-}
