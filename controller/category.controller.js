@@ -94,3 +94,7 @@ module.exports = {
   deleteCategoryById,
   updateCategoryById,
 };
+
+{
+  Kiran;
+}
