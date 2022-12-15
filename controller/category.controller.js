@@ -66,7 +66,6 @@ let deleteCategoryById = async (req, res, next) => {
   res.end();
 };
 
-
 createTable();
 
 module.exports = {
