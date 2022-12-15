@@ -47,12 +47,19 @@ let getCategoryById = async (req, res, next) => {
 };
 
 let addNewCategory = async (req, res, next) => {
-  let categoryToAdd = req.body.name;
-  await Categories.create({
-    name: categoryToAdd,
-  });
-  res.status(201).send("Category Added");
-  res.end();
+  try {
+    let categoryToAdd = req.body;
+    await Categories.create({
+      name: categoryToAdd,
+    });
+    res.status(201).send("Category Added");
+    res.end();
+  } catch (err) {
+    //res.status(400).send("Something went wrong");
+    next(err); //except above line we can write this which will show HTML page error
+  } //finally {
+  //   res.end();
+  // }
 };
 
 let deleteCategoryById = async (req, res, next) => {
@@ -69,7 +76,7 @@ let deleteCategoryById = async (req, res, next) => {
 let updateCategoryById = async (req, res, next) => {
   if (!req.body.name) {
     res.status(500).send("please enter the Category Name");
-    res.end();
+    return;
   }
   let id = req.params.categoryId;
   // let name = req.body.name;
@@ -94,7 +101,3 @@ module.exports = {
   deleteCategoryById,
   updateCategoryById,
 };
-
-{
-  Kiran;
-}

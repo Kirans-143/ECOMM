@@ -9,7 +9,7 @@ router.get("/", (req, res, next) => {
 });
 
 //This is for categories and products
-router.use("/categories", categoryRoutes);
-router.use("/products", productRoutes);
+router.use("/ecomm/api/v1/categories", categoryRoutes);
+router.use("/ecomm/api/v1/products", productRoutes);
 
 module.exports = router;
