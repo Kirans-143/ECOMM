@@ -62,14 +62,37 @@ let addNewCategory = async (req, res, next) => {
   // }
 };
 
+/*let deleteCategoryById = async (req, res, next) => {
+  let id = req.params.categoryId;
+  let category = await Categories.findByPk(id);
+  try {
+    if (!category) {
+      throw new Error("Category not found");
+    }
+    await Categories.destroy({
+      where: {
+        id: id,
+      },
+    });
+    res.status(200).send("Category deleted");
+    res.end();
+  } catch (err) {
+    next(err);
+  }
+};*/
 let deleteCategoryById = async (req, res, next) => {
   let id = req.params.categoryId;
-  await Categories.destroy({
-    where: {
-      id: id,
-    },
-  });
-  res.status(200).send("Category deleted");
+  let category = await Categories.findByPk(id);
+  if (category) {
+    await Categories.destroy({
+      where: {
+        id: id,
+      },
+    });
+    res.status(200).send("Category deleted");
+  } else {
+    res.status(404).send("Category not found");
+  }
   res.end();
 };
 

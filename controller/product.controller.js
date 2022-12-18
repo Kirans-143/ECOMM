@@ -64,9 +64,43 @@ let insertProducts = async () => {
   ]);
 };
 
+let addNewProduct = async (req, res, next) => {
+  try {
+    let productToAdd = {
+      name: req.body.name,
+      price: req.body.price,
+      categoryId: req.body.categoryId,
+    };
+    await Products.create(productToAdd);
+    res.status(200).send("Product Added");
+    res.end();
+  } catch (err) {
+    res.status(404).send("Something went wrong");
+    next(err);
+  }
+};
+
+// let updateProductById = async (req, res, next) => {
+//   let id = req.params.productId;
+//   let productToUpdate = {
+//     name: req.body.name,
+//     price: req.body.price,
+//     ctegoryId: req.body.categoryId,
+//   };
+//   // await Products.update(productToUpdate, {
+//   //   where: {
+//   //     id: id,
+//   //   },
+//   // });
+//   // let updateProduct = await Products.findByPk(id);
+//   res.status(200).send(productToUpdate);
+//   res.end();
+// };
 createTable(); //(no need to call it coz it will create automayticaly without createTable function)
 
 module.exports = {
   getAllProducts,
   getProductById,
+  addNewProduct,
+  // updateProductById,
 };
