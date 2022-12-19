@@ -33,9 +33,9 @@ let getAllCategories = async (req, res, next) => {
 
 let getCategoryById = async (req, res, next) => {
   let id = req.params.categoryId;
-  if (!id) {
-    res.status(400).send("ID not passes");
-  }
+  // if (!id) {
+  //   res.status(400).send("ID not passes");
+  // }
   let categories = await Categories.findAll({
     where: {
       id: id,
@@ -47,11 +47,15 @@ let getCategoryById = async (req, res, next) => {
 };
 
 let addNewCategory = async (req, res, next) => {
+  // if (!req.body.name) {
+  //   res.status(400).send({
+  //     message: "Category Name is required",
+  //   });
+  //   return;
+  // } when we adding validator this is not required
   try {
     let categoryToAdd = req.body;
-    await Categories.create({
-      name: categoryToAdd,
-    });
+    await Categories.create(categoryToAdd);
     res.status(201).send("Category Added");
     res.end();
   } catch (err) {
