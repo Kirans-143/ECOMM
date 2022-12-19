@@ -8,16 +8,25 @@ let getAllProducts = async (req, res, next) => {
   let maxPrice = req.query.maxPrice;
   let products = [];
 
-  if (minPrice && maxPrice) {
-    products = await filterByPriceRange(minPrice, maxPrice);
-  }
-  if (categoryId) {
-    products = await filterByCategory(categoryId);
-  } else {
+  if (Object.keys(req.query).length == 0) {
     products = await Products.findAll();
+  } else {
+    if (categoryId && !(minPrice || maxPrice)) {
+      products = await filterByCategory(categoryId);
+    } else if (!categoryId && minPrice && maxPrice) {
+      products = await filterByPriceRange(minPrice, maxPrice);
+    } else {
+      products = await Products.findAll({
+        where: {
+          categoryId: categoryId,
+          price: {
+            [Sequelize.Op.gte]: minPrice,
+            [Sequelize.Op.lte]: maxPrice,
+          },
+        },
+      });
+    }
   }
-  // res.writeHead(200, { "Content-Type": "application/json" });
-  // res.write(JSON.stringify(products));
   res.status(200).json(products);
   res.end();
 };
@@ -35,8 +44,8 @@ let filterByPriceRange = async (minPrice, maxPrice) => {
   let filteredProducts = await Products.findAll({
     where: {
       price: {
-        [Sequelize.Op.gte]: minPrice,
-        [Sequelize.Op.lte]: maxPrice,
+        [Sequelize.Op.gte]: minPrice || 0,
+        [Sequelize.Op.lte]: maxPrice || Infinity,
       },
     },
   });
