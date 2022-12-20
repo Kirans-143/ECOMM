@@ -66,13 +66,7 @@ let getProductById = async (req, res, next) => {
   res.end();
 };
 
-let createTable = async () => {
-  await dbConnection.sync({ force: true });
-  insertProducts();
-  console.log("Product Table Is Crreated");
-};
-
-let insertProducts = async () => {
+let insertProducts = async (req, res, next) => {
   await Products.bulkCreate([
     {
       name: "Samsung Galaxy Note",
@@ -105,6 +99,10 @@ let insertProducts = async () => {
       price: 32000,
     },
   ]);
+  res.status(201).json({
+    message: "Products added",
+  });
+  res.end();
 };
 
 let addNewProduct = async (req, res, next) => {
@@ -139,11 +137,11 @@ let addNewProduct = async (req, res, next) => {
 //   res.status(200).send(productToUpdate);
 //   res.end();
 // };
-createTable(); //(no need to call it coz it will create automayticaly without createTable function)
 
 module.exports = {
   getAllProducts,
   getProductById,
   addNewProduct,
+  insertProducts,
   // updateProductById,
 };

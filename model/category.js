@@ -2,7 +2,7 @@ let sequelize = require("sequelize");
 let dbConnection = require("./../config/db.config");
 
 let Categories = dbConnection.define(
-  "category",
+  "categories",
   {
     id: {
       primaryKey: true,

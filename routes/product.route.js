@@ -6,7 +6,9 @@ productRouter.get("/", productController.getAllProducts);
 
 productRouter.get("/:productId", productController.getProductById);
 
-productRouter.post("/", productController.addNewProduct);
+productRouter.post("/", productController.insertProducts);
+
+// productRouter.post("/", productController.addNewProduct);
 
 // productRouter.put("/:productId", productController.updateProductById);
 
