@@ -6,6 +6,7 @@ let ErrorHandler = require("./middlewares/errorHandler");
 let dbConnection = require("./config/db.config");
 let Category = require("./model/category");
 let Products = require("./model/product");
+const Roles = require("./model/Roles");
 
 Category.hasMany(Products); //create the association..This will create categoryId(foriegn) in products table
 
@@ -17,6 +18,7 @@ expressApp.use(ErrorHandler);
 let init = async () => {
   await dbConnection.sync({ force: true });
   insertCategories();
+  insertRoles();
 };
 
 let insertCategories = async () => {
@@ -34,6 +36,20 @@ let insertCategories = async () => {
       name: "Appliances",
     },
   ]);
+};
+
+let insertRoles = async () => {
+  Roles.bulkCreate([
+    {
+      id: 1,
+      name: "user",
+    },
+    {
+      id: 2,
+      name: "admin",
+    },
+  ]);
+  console.log("Roles Added");
 };
 
 expressApp.listen(serverConfig.PORT, () => {
