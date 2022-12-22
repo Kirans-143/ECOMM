@@ -1,5 +1,6 @@
 let controller = require("./../controller/auth.controller");
 let express = require("express");
+const verifySignUp = require("../middlewares/VerifySignUp");
 let expressApp = express();
 let router = express.Router();
 
@@ -11,6 +12,10 @@ expressApp.use(function (req, res, next) {
   next();
 });
 
-router.post("/signup", controller.signup);
+router.post(
+  "/signup",
+  [verifySignUp.checkDuplicateName, verifySignUp.checkRolesExisted],
+  controller.signup
+);
 router.post("/signin", controller.signin);
 module.exports = router;
