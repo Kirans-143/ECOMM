@@ -3,12 +3,10 @@ let serverConfig = require("./config/server.config");
 let router = require("./routes/index");
 let bodyParser = require("body-parser");
 let ErrorHandler = require("./middlewares/errorHandler");
+let db = require("./model");
 let dbConnection = require("./config/db.config");
-let Category = require("./model/category");
-let Products = require("./model/product");
-const Roles = require("./model/Roles");
 
-Category.hasMany(Products); //create the association..This will create categoryId(foriegn) in products table
+db.category.hasMany(db.product); //create the association..This will create categoryId(foriegn) in products table
 
 let expressApp = express();
 expressApp.use(bodyParser.json());
@@ -22,7 +20,7 @@ let init = async () => {
 };
 
 let insertCategories = async () => {
-  await Category.bulkCreate([
+  await db.category.bulkCreate([
     {
       name: "Fashion",
     },
@@ -39,7 +37,7 @@ let insertCategories = async () => {
 };
 
 let insertRoles = async () => {
-  Roles.bulkCreate([
+  db.roles.bulkCreate([
     {
       id: 1,
       name: "user",

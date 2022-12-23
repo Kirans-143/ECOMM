@@ -1,10 +1,12 @@
 const sequelize = require("sequelize");
 let db = {};
 
+db.sequelize = sequelize;
 db.roles = require("./Roles");
 db.user = require("./User");
-db.product = require("./product");
+db.product = require("./Product");
 db.cart = require("./Cart");
+db.category = require("./Category");
 
 db.roles.belongsToMany(db.user, {
   through: "user_roles",

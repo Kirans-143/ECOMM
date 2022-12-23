@@ -1,8 +1,7 @@
-let sequelizeInstance = require("./../config/db.config");
-const Categories = require("./../model/category");
+let db = require("./../model");
 
 let getAllCategories = async (req, res, next) => {
-  let categories = await Categories.findAll();
+  let categories = await db.category.findAll();
   res.writeHead(200, { "Content-Type": "application/json" });
   res.write(JSON.stringify(categories));
   res.end();
@@ -13,7 +12,7 @@ let getCategoryById = async (req, res, next) => {
   // if (!id) {
   //   res.status(400).send("ID not passes");
   // }
-  let categories = await Categories.findAll({
+  let categories = await db.category.findAll({
     where: {
       id: id,
     },
@@ -32,7 +31,7 @@ let addNewCategory = async (req, res, next) => {
   // } when we adding validator this is not required
   try {
     let categoryToAdd = req.body;
-    await Categories.create(categoryToAdd);
+    await db.category.create(categoryToAdd);
     res.status(201).send("Category Added");
     res.end();
   } catch (err) {
@@ -45,12 +44,12 @@ let addNewCategory = async (req, res, next) => {
 
 /*let deleteCategoryById = async (req, res, next) => {
   let id = req.params.categoryId;
-  let category = await Categories.findByPk(id);
+  let category = await db.category.findByPk(id);
   try {
     if (!category) {
       throw new Error("Category not found");
     }
-    await Categories.destroy({
+    await db.category.destroy({
       where: {
         id: id,
       },
@@ -63,9 +62,9 @@ let addNewCategory = async (req, res, next) => {
 };*/
 let deleteCategoryById = async (req, res, next) => {
   let id = req.params.categoryId;
-  let category = await Categories.findByPk(id);
+  let category = await db.category.findByPk(id);
   if (category) {
-    await Categories.destroy({
+    await db.category.destroy({
       where: {
         id: id,
       },
@@ -87,13 +86,13 @@ let updateCategoryById = async (req, res, next) => {
   let categoryToUpdate = {
     name: req.body.name,
   };
-  await Categories.update(categoryToUpdate, {
+  await db.category.update(categoryToUpdate, {
     where: {
       id: id,
     },
   });
 
-  let updateCategory = await Categories.findByPk(id);
+  let updateCategory = await db.category.findByPk(id);
   res.status(200).send(updateCategory);
 };
 
