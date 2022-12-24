@@ -1,20 +1,18 @@
-let dbConnection = require("./../config/db.config");
-let sequelize = require("sequelize");
-
-const Role = dbConnection.define(
-  "roles",
-  {
-    id: {
-      type: sequelize.INTEGER,
-      primaryKey: true,
+module.exports = (sequelize, dbConnection) => {
+  const Role = dbConnection.define(
+    "roles",
+    {
+      id: {
+        type: sequelize.INTEGER,
+        primaryKey: true,
+      },
+      name: {
+        type: sequelize.STRING,
+      },
     },
-    name: {
-      type: sequelize.STRING,
-    },
-  },
-  {
-    timestamps: false,
-  }
-);
-
-module.exports = Role;
+    {
+      timestamps: false,
+    }
+  );
+  return Role;
+};

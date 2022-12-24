@@ -1,21 +1,19 @@
-let sequelizeInstance = require("./../config/db.config");
-let sequelize = require("sequelize");
-
-let Cart = sequelizeInstance.define(
-  "cart",
-  {
-    id: {
-      type: sequelize.DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true,
+module.exports = (sequelize, dbConnection) => {
+  let Cart = dbConnection.define(
+    "cart",
+    {
+      id: {
+        type: sequelize.DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+      },
+      cost: {
+        type: sequelize.DataTypes.BIGINT,
+      },
     },
-    cost: {
-      type: sequelize.DataTypes.BIGINT,
-    },
-  },
-  {
-    timestamps: false,
-  }
-);
-
-module.exports = Cart;
+    {
+      timestamps: false,
+    }
+  );
+  return Cart;
+};
