@@ -4,7 +4,6 @@ let router = require("./routes/index");
 let bodyParser = require("body-parser");
 let ErrorHandler = require("./middlewares/errorHandler");
 let db = require("./model");
-let dbConnection = require("./config/db.config");
 
 db.category.hasMany(db.product); //create the association..This will create categoryId(foriegn) in products table
 
@@ -13,8 +12,11 @@ expressApp.use(bodyParser.json());
 expressApp.use(router);
 expressApp.use(ErrorHandler);
 
+db.connection.sync({ force: true }).then(() => {
+  init();
+});
+
 let init = async () => {
-  await dbConnection.sync({ force: true });
   insertCategories();
   insertRoles();
 };
@@ -52,5 +54,4 @@ let insertRoles = async () => {
 
 expressApp.listen(serverConfig.PORT, () => {
   console.log("Server is running on port " + serverConfig.PORT);
-  init();
 });

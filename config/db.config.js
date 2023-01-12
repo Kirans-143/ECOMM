@@ -1,13 +1,33 @@
-let sequelize = require("sequelize");
-let instance = new sequelize("ecommerce_db", "root", "Kiranshet@007", {
-  host: "localhost",
+const developmentInstance = {
+  DB: "ecommerce_db",
+  USER: "root",
+  PASSWORD: "Kiranshet@007",
+  HOST: "localhost",
   dialect: "mysql",
-  operatorsAliases: 0,
+
   pool: {
     max: 5,
     min: 0,
     acquire: 300000,
     idle: 10000,
   },
-});
-module.exports = instance;
+};
+
+const testingInstance = {
+  DB: "ecommerce_test_db",
+  USER: "root",
+  PASSWORD: "Kiranshet@007",
+  HOST: "localhost",
+  dialect: "mysql",
+  pool: {
+    max: 5,
+    min: 0,
+    acquire: 300000,
+    idle: 10000,
+  },
+};
+
+module.exports = {
+  development: developmentInstance,
+  test: testingInstance,
+};
